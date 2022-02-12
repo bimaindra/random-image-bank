@@ -35,7 +35,7 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 	};
 
 	return (
-		<div className='group relative overflow-hidden rounded-md border drop-shadow-md transition-all duration-500 ease-out hover:shadow-md hover:drop-shadow-xl'>
+		<div className='group relative overflow-hidden rounded-md border drop-shadow-md transition-all duration-500  ease-out hover:shadow-md hover:drop-shadow-xl'>
 			<div className='aspect-video overflow-hidden'>
 				<img
 					src={item.image.thumbnail}
@@ -56,16 +56,16 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 					<div className='mx-auto rounded-lg bg-white p-6 shadow-lg drop-shadow-lg md:w-[600px] xl:w-[680px] xl:p-8 2xl:w-[920px]'>
 						<div className='mx-auto w-full'>
 							<button
-								className='absolute top-1 right-2 text-base md:right-3 md:text-xl'
+								className='absolute top-1 right-1 h-5 w-5 border border-dashed border-slate-300 bg-transparent text-sm text-slate-500 outline-none hover:border-slate-600 hover:text-slate-500 focus:outline-none md:h-7 md:w-7 md:text-lg'
 								onClick={close}>
 								<FontAwesomeIcon icon={faClose} />
 							</button>
 							<div className='relative'>
-								<div className='max-h-[90vh] md:max-h-[80vh]'>
+								<div className='grid max-h-[60vh] min-h-[60vh] place-items-center border border-dashed border-slate-300 px-4 md:max-h-[55vh] md:min-h-[55vh]'>
 									<img
 										src={item.image.regular}
 										alt={item.alt}
-										className='mx-auto max-h-[90vh] max-w-full rounded-md object-cover md:max-h-[80vh]'
+										className='mx-auto max-h-[55vh] max-w-full rounded-md object-cover md:max-h-[50vh]'
 										loading='lazy'
 									/>
 								</div>
