@@ -1,6 +1,18 @@
 @tailwind base;
 @tailwind components;
 
+:root {
+	--header-height: 52px;
+}
+
+.main-container {
+	min-height: calc(100vh - var(--header-height));
+}
+
+.main-container--error {
+	min-height: calc(100vh - 132px);
+}
+
 .loader {
 	@apply text-center;
 }
