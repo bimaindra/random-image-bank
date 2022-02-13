@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Footer = () => {
 	return (
 		<footer className='bg-slate-500 py-4 text-white'>
@@ -10,13 +8,13 @@ const Footer = () => {
 						href='https://twitter.com/bimaindraa'
 						rel='noreferrer'
 						target='_blank'
-						className='transition-colors hover:text-slate-400'>
+						className='transition-colors hover:text-slate-300'>
 						@bimaindraa
 					</a>
 				</span>
 			</div>
 		</footer>
 	);
-}
+};
 
 export default Footer;
