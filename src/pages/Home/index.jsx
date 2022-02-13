@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import debounce from 'lodash.debounce';
 import Card from '../../components/Card';
 import FormGroup from '../../components/FormGroup';
 import SectionTitle from '../../components/SectionTitle';
@@ -10,6 +11,7 @@ const Home = () => {
 	const [image, setImage] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [downloading, setDownloading] = useState(false);
+	const [keywordTemp, setKeywordTemp] = useState('');
 	const [keyword, setKeyword] = useState('');
 	const [page, setPage] = useState(1);
 
@@ -85,11 +87,19 @@ const Home = () => {
 			});
 	};
 
+	const debouncedFetch = useCallback(
+		debounce((nextValue) => setKeyword(nextValue), 1000),
+		[]
+	);
+
 	const handleSearchKeyword = (e) => {
-		setKeyword(e.target.value);
+		setKeywordTemp(e.target.value);
+		const { value: nextValue } = e.target;
+		debouncedFetch(nextValue);
 	};
 
 	const handleClearKeyword = (e) => {
+		setKeywordTemp('');
 		setKeyword('');
 	};
 
@@ -105,9 +115,9 @@ const Home = () => {
 				<Input
 					onHandleSearchKeyword={handleSearchKeyword}
 					onHandleClearKeyword={handleClearKeyword}
-					placeholder='Type here and hit enter...'
+					placeholder='Type here...'
 					useClear={true}
-					keyword={keyword}
+					keyword={keywordTemp}
 				/>
 			</FormGroup>
 			<FormGroup>
@@ -126,7 +136,7 @@ const Home = () => {
 				) : (
 					<div className='grid grid-cols-1'>
 						<p>
-							We cannot find images you are searching for, maybe a bit spelling mistake ? Try
+							We cannot find images you are searching for, maybe a bit spelling mistake ? Maybe try
 							another keyword.
 						</p>
 					</div>

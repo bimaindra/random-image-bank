@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Popup from 'reactjs-popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,15 +22,15 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 		author: image.user.name,
 		url: image.urls.raw,
 		user: image.user.instagram_username ? image.user.instagram_username : image.user.name,
-		likes: image.likes,
-		views: image.views,
-		downloads: image.downloads,
+		likes: image.likes ? image.likes : 0,
+		views: image.views ? image.views : 0,
+		downloads: image.downloads ? image.downloads : 0,
 		date: image.created_at,
-		camera: image.exif.name,
-		aperture: image.exif.aperture,
-		iso: image.exif.iso,
-		shutter: image.exif.shutter_speed,
-		exposure: image.exif.exposure_time
+		camera: image.exif ? image.exif.name : null,
+		aperture: image.exif ? image.exif.aperture : null,
+		iso: image.exif ? image.exif.iso : null,
+		shutter: image.exif ? image.exif.shutter_speed : null,
+		exposure: image.exif ? image.exif.exposure_time : null
 	};
 
 	return (
@@ -44,7 +43,7 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 					loading='lazy'
 				/>
 			</div>
-			<div className='relative flex flex-1 flex-col items-center justify-center gap-1 p-2 md:gap-2 md:py-3 md:px-4 xl:flex-row xl:justify-between'>
+			<div className='relative flex flex-1 flex-col items-center justify-center gap-1 break-words p-2 md:gap-2 md:py-3 md:px-4 xl:flex-row xl:justify-between'>
 				<h3 className='text-xs font-bold md:text-sm xl:w-3/5'>@{item.user}</h3>
 				<p className='text-xs italic'>{formatDate(item.date)}</p>
 			</div>
@@ -80,11 +79,10 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 									</p>
 									{item.camera !== null ? (
 										<p className='mb-4'>
-											It created using <b>{item.camera}</b> with
+											It created using <b>{item.camera}</b>
 											{item.aperture ? (
 												<span>
-													{' '}
-													aperture <b>{item.aperture}</b>,
+													with aperture <b>{item.aperture}</b>,
 												</span>
 											) : null}
 											{item.iso ? (
@@ -111,21 +109,27 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 								</div>
 								<hr className='my-4 border' />
 								<div className='flex justify-around gap-4'>
-									<span>
-										<FontAwesomeIcon icon={faEye} className='mr-2' />
-										<b className='text-lg'>{formatNumber(item.views)}</b>{' '}
-										<span className='hidden md:inline-block'>views</span>
-									</span>
-									<span>
-										<FontAwesomeIcon icon={faHeart} className='mr-2' />
-										<b className='text-lg'>{formatNumber(item.likes)}</b>{' '}
-										<span className='hidden md:inline-block'>likes</span>
-									</span>
-									<span>
-										<FontAwesomeIcon icon={faChevronDown} className='mr-2' />
-										<b className='text-lg'>{formatNumber(item.downloads)}</b>{' '}
-										<span className='hidden md:inline-block'>downloads</span>
-									</span>
+									{item.views !== 0 ? (
+										<span>
+											<FontAwesomeIcon icon={faEye} className='mr-2' />
+											<b className='text-lg'>{formatNumber(item.views)}</b>{' '}
+											<span className='hidden md:inline-block'>views</span>
+										</span>
+									) : null}
+									{item.likes !== 0 ? (
+										<span>
+											<FontAwesomeIcon icon={faHeart} className='mr-2' />
+											<b className='text-lg'>{formatNumber(item.likes)}</b>{' '}
+											<span className='hidden md:inline-block'>likes</span>
+										</span>
+									) : null}
+									{item.downloads !== 0 ? (
+										<span>
+											<FontAwesomeIcon icon={faChevronDown} className='mr-2' />
+											<b className='text-lg'>{formatNumber(item.downloads)}</b>{' '}
+											<span className='hidden md:inline-block'>downloads</span>
+										</span>
+									) : null}
 								</div>
 								<hr className='my-4 border' />
 							</div>
