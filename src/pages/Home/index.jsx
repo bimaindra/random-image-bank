@@ -26,7 +26,7 @@ const Home = () => {
 		};
 	}, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const fetch = (initial = true) => {
+	const fetch = (isInitial = true) => {
 		const endpoint = 'https://api.unsplash.com';
 		const key = process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY;
 
@@ -39,7 +39,9 @@ const Home = () => {
 				.get(`${endpoint}/search/photos?client_id=${key}&query=${keyword}&per_page=12&page=${page}`)
 				.then((response) => {
 					setTotalPage(response.data.total_pages);
-					initial
+					setStatusCode(response.status);
+					// fething for the first time or not
+					isInitial
 						? setImage(response.data.results)
 						: setImage([...image, ...response.data.results]);
 					// set loader
@@ -48,13 +50,9 @@ const Home = () => {
 				.catch((error) => {
 					// error handling
 					if (error.response) {
-						setTimeout(() => {
-							setStatusCode(error.response.status);
-						}, 500);
+						setStatusCode(error.response.status);
 					} else if (error.request) {
-						setTimeout(() => {
-							setStatusCode(error.request);
-						}, 500);
+						setStatusCode(error.request);
 					} else {
 						console.log('Error', error.message);
 					}
@@ -65,19 +63,17 @@ const Home = () => {
 			axios
 				.get(`${endpoint}/photos/random?client_id=${key}&count=12`)
 				.then((response) => {
-					initial ? setImage(response.data) : setImage([...image, ...response.data]);
+					setStatusCode(response.status);
+					// fething for the first time or not
+					isInitial ? setImage(response.data) : setImage([...image, ...response.data]);
 					setLoading(false);
 				})
 				.catch((error) => {
 					// error handling
 					if (error.response) {
-						setTimeout(() => {
-							setStatusCode(error.response.status);
-						}, 500);
+						setStatusCode(error.response.status);
 					} else if (error.request) {
-						setTimeout(() => {
-							setStatusCode(error.request);
-						}, 500);
+						setStatusCode(error.request);
 					} else {
 						console.log('Error', error.message);
 					}
@@ -151,7 +147,10 @@ const Home = () => {
 	};
 
 	const debouncedSearchKeyword = useCallback(
-		debounce((nextValue) => setKeyword(nextValue), 1500),
+		debounce((nextValue) => {
+			setKeyword(nextValue);
+			setLoading(false);
+		}, 3000),
 		[]
 	);
 
@@ -182,16 +181,22 @@ const Home = () => {
 		}
 	};
 
-	return (
-		<>
-			{statusCode === null ? (
+	const renderComponent = () => {
+		if (statusCode === null) {
+			return (
+				<div className='main-container--fullinside grid place-items-center'>
+					<Loader isLoading={loading} className='mb-6' />
+				</div>
+			);
+		} else if (statusCode >= 200 && statusCode <= 206) {
+			return (
 				<div>
 					<FormGroup>
 						<SectionTitle>Search</SectionTitle>
 						<Input
 							onHandleSearchKeyword={handleSearchKeyword}
 							onHandleClearKeyword={handleClearKeyword}
-							placeholder='Type here...'
+							placeholder='Type here... (e.g. london, bromo, jogja, etc)'
 							useClear={true}
 							keyword={keywordTemp}
 						/>
@@ -221,14 +226,15 @@ const Home = () => {
 					</FormGroup>
 					<Loader isLoading={loading} className='mb-6' />
 					{image.length > 0 && !lastPage ? (
-						<FormGroup className={loading ? 'hidden' : ''}>
+						<FormGroup className={`mb-10 md:mb-16 xl:mb-20 ${loading ? 'hidden' : ''}`}>
 							<div className='text-center'>
 								<button
 									type='button'
 									className='flex-shrink-0 rounded border-0 bg-slate-500 py-2 px-8 font-body text-sm tracking-wider text-white transition-colors duration-500 ease-out hover:bg-slate-600 focus:outline-none md:text-base'
 									onClick={(e) =>
 										keyword !== '' ? (handleCountPage(e), fetch(false)) : fetch(false)
-									}>
+									}
+									data-gtm='load_more'>
 									More...
 								</button>
 							</div>
@@ -237,16 +243,20 @@ const Home = () => {
 						<div />
 					)}
 				</div>
-			) : (
-				<div className='main-container--error mx-auto grid h-full w-full place-items-center md:w-[640px]'>
+			);
+		} else {
+			return (
+				<div className='main-container--fullinside mx-auto grid h-full w-full place-items-center md:w-[640px]'>
 					<p className='text-center text-xl md:text-2xl'>
 						Opps... Sorry.... <br /> Something went wrong with the API. <br /> Please visit again
 						later 🙏🏻😃
 					</p>
 				</div>
-			)}
-		</>
-	);
+			);
+		}
+	};
+
+	return <div>{renderComponent()}</div>;
 };
 
 export default Home;
