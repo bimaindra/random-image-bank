@@ -2,14 +2,14 @@
 @tailwind components;
 
 :root {
-	--header-height: 52px;
+	--header-height: 48px;
 }
 
 .main-container {
 	min-height: calc(100vh - var(--header-height));
 }
 
-.main-container--error {
+.main-container--fullinside {
 	min-height: calc(100vh - 132px);
 }
 
