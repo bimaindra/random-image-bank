@@ -18,6 +18,7 @@ const Input = (props) => {
 				placeholder={placeholder}
 				value={keyword}
 				onChange={(e) => onHandleSearchKeyword(e)}
+				data-gtm='search_input'
 			/>
 			{useClear && keyword !== '' && (
 				<button

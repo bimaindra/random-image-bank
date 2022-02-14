@@ -52,7 +52,11 @@ const Card = (props) => {
 				<p className='text-xs italic'>{formatDate(item.date)}</p>
 			</div>
 			<Popup
-				trigger={<button className='absolute top-0 left-0 z-10 block h-full w-full'></button>}
+				trigger={
+					<button
+						className='absolute top-0 left-0 z-10 block h-full w-full'
+						data-gtm='view_image_detail'></button>
+				}
 				modal
 				lockScroll>
 				{(close) => (
@@ -142,14 +146,15 @@ const Card = (props) => {
 									//href={`${item.image.raw}&q=80&fm=jpg&crop=entropy&cs=tinysrgb`}
 									href={item.image.download_location}
 									className={`${
-										isDownloading ? 'pointer-events-none bg-slate-600' : false
+										isDownloading ? 'pointer-events-none bg-slate-600 opacity-60' : false
 									} flex-shrink-0 cursor-pointer rounded-3xl border-0 bg-slate-500 py-2 px-8 font-body text-sm tracking-wider text-white transition-colors duration-500 ease-out hover:bg-slate-600 focus:outline-none md:text-base`}
 									download
 									onClick={(e) => {
 										e.preventDefault();
 										onHandleDownloadImageUrl(e);
 										onHandleDownload(e);
-									}}>
+									}}
+									data-gtm='download_button'>
 									<FontAwesomeIcon icon={faDownload} className='mr-2' />
 
 									{isDownloading ? 'Downloading...' : 'Download'}
