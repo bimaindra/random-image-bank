@@ -10,12 +10,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { formatDate, formatNumber } from '../../utils/formatted';
 
-const Card = ({ image, onHandleDownload, isDownloading }) => {
+const Card = (props) => {
+	const { image, onHandleDownload, isDownloading, onHandleDownloadImageUrl } = props;
+
+	// stored response api
 	const item = {
 		image: {
 			thumbnail: image.urls.thumb,
 			regular: image.urls.regular,
 			raw: image.urls.raw,
+			download_location: `${image.links.download_location}?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`,
 			alt: image.alt_description
 		},
 		description: image.description,
@@ -135,13 +139,15 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 							</div>
 							<div className='mt-4 flex items-center justify-center'>
 								<a
-									href={`${item.image.raw}&q=80&fm=jpg&crop=entropy&cs=tinysrgb`}
+									//href={`${item.image.raw}&q=80&fm=jpg&crop=entropy&cs=tinysrgb`}
+									href={item.image.download_location}
 									className={`${
 										isDownloading ? 'pointer-events-none bg-slate-600' : false
 									} flex-shrink-0 cursor-pointer rounded-3xl border-0 bg-slate-500 py-2 px-8 font-body text-sm tracking-wider text-white transition-colors duration-500 ease-out hover:bg-slate-600 focus:outline-none md:text-base`}
 									download
 									onClick={(e) => {
 										e.preventDefault();
+										onHandleDownloadImageUrl(e);
 										onHandleDownload(e);
 									}}>
 									<FontAwesomeIcon icon={faDownload} className='mr-2' />
@@ -159,6 +165,7 @@ const Card = ({ image, onHandleDownload, isDownloading }) => {
 
 PropTypes.propTypes = {
 	props: PropTypes.object,
+	onHandleDownloadImageUrl: PropTypes.func,
 	onHandleDownload: PropTypes.func,
 	isDownloading: PropTypes.bool
 };
