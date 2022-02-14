@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const Header = ({ title = 'Random Image Bank' }) => {
+const Header = (props) => {
+	const { title = 'Random Image Bank' } = props;
+
 	return (
 		<header className='fixed top-0 z-50 w-full bg-slate-50 py-4 shadow-sm'>
 			<div className='container mx-auto flex items-center justify-between px-4'>

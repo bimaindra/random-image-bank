@@ -2,13 +2,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
-const Input = ({
-	placeholder = 'Type here',
-	onHandleSearchKeyword,
-	onHandleClearKeyword,
-	useClear = false,
-	keyword
-}) => {
+const Input = (props) => {
+	const {
+		placeholder = 'Type here',
+		onHandleSearchKeyword,
+		onHandleClearKeyword,
+		useClear = false,
+		keyword
+	} = props;
+
 	return (
 		<div className='relative'>
 			<input
