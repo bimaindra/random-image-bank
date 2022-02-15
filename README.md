@@ -1,6 +1,43 @@
-# Getting Started with Random Image Bank App
+# Random Image Bank App
+
+Just simple app to show you some random photos from [Unsplash](https://unsplash.com). ⚡️
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Build with
+
+1. [ReactJS](https://reactjs.org/)
+2. [React Router](https://reactrouter.com/)
+3. [TailwindCSS](https://tailwindcss.com/)
+4. [Axios](https://axios-http.com/)
+5. [Google Font](https://fonts.google.com/)
+6. [Font Awesome](https://fontawesome.com/)
+
+## Install
+
+Clone this repository.
+
+Enter root directory
+
+Then run these syntax `npm install`
+
+> Make sure you already have ACCESS_KEY from Unsplash. If you haven't, please create an app on Unsplash account and grab the ACCESS_KEY. [Here's](https://unsplash.com/documentation#creating-a-developer-account) the instruction.
+
+Create `.env ` file in the root folder. Then, just copy these following **Environment Variable** below :
+
+```
+[Required]
+REACT_APP_UNSPLASH_API_ACCESS_KEY = (Your ACCESS_KEY)
+
+[Optional]
+REACT_APP_GTM_ID = GTM_ID
+REACT_APP_GTM_AUTH_DEVELOPMENT = (Your GTM Auth code Dev Environment)
+REACT_APP_GTM_AUTH_PRODUCTION = (Your GTM Auth code Prod Environment)
+REACT_APP_GTM_PREVIEW_DEVELOPMENT = (Your Preview code Dev Environment)
+REACT_APP_GTM_PREVIEW_PRODUCTION = (Your Preview code Prod Environment)
+```
+
+**Environment Variable** that related with GTM is optional. It's aiming for tracking the website. If you want it, make sure you already setup your GA & GTM. If you don't want it just leave it and remove the dependency code related with `TagManager` on `index.js`.
 
 ## Available Scripts
 
@@ -28,17 +65,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
